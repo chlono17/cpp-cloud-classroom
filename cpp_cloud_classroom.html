@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>企鵝與麻雀的 C++ 雲端教室</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f8fc;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+    aside {
+      width: 260px;
+      background-color: #eaf3ff;
+      padding: 1rem;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+      height: 100vh;
+      overflow-y: auto;
+    }
+    aside h2 {
+      font-size: 1.2rem;
+      margin: 1rem 0 0.5rem;
+      color: #324b66;
+    }
+    aside ul {
+      list-style: none;
+      padding-left: 1rem;
+      margin: 0;
+    }
+    aside li {
+      margin: 0.3rem 0;
+      font-size: 0.95rem;
+      color: #3c5b7a;
+    }
+    .main {
+      flex: 1;
+      overflow-y: auto;
+    }
+    header {
+      background-color: #dbeaff;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    header img {
+      max-height: 180px;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: #324b66;
+    }
+    .container {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+    #preview {
+      border: 1px solid #ccddee;
+      padding: 1rem;
+      margin-top: 1rem;
+      background-color: #f2f7fb;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #4178c0;
+    }
+  </style>
+</head>
+<body>
+
+  <aside>
+    <h2>🎯 基礎 C++</h2>
+    <ul>
+      <li>2025/02/07 — 開發環境設定（10min）</li>
+      <li>2025/02/09 — 基礎觀念篇（40min）</li>
+      <li>2025/02/10 — 流程控制和迴圈（60min）</li>
+      <li>2025/02/18 — 基礎資料結構（50min）</li>
+      <li>2025/02/25 — 字串＋總複習（60min）</li>
+    </ul>
+    <h2>🎯 進階 C++</h2>
+    <ul>
+      <li>2025/03/04 — 結構＋函數（60min）</li>
+      <li>2025/03/09 — 進階觀念與技巧（40min）</li>
+      <li>2025/03/11 — 亂數＋總複習（50min）</li>
+    </ul>
+    <h2>🎯 企鵝物件導向世界</h2>
+    <ul>
+      <li>2025/03/16 — 檔案處理（40min）</li>
+      <li>2025/03/18 — 物件導向（60min）</li>
+      <li>2025/03/23 — 總複習（40min）</li>
+    </ul>
+  </aside>
+
+  <div class="main">
+    <header>
+      <img src="CC25E04F-58C5-4303-8F06-FCD19AF11D67.png" alt="企鵝與麻雀封面">
+      <h1>企鵝與麻雀的 C++ 雲端教室</h1>
+      <p>一起在雲端筆記、學習、快樂成長 ☁️🐧🐦</p>
+    </header>
+
+    <div class="container">
+      <textarea id="markdown-editor"></textarea>
+      <button onclick="saveNote()">儲存筆記</button>
+      <h3>預覽內容：</h3>
+      <div id="preview"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+  <script>
+    const easyMDE = new EasyMDE({
+      element: document.getElementById("markdown-editor"),
+      placeholder: "請輸入你的 C++ 筆記（支援 Markdown 語法）...",
+      autoDownloadFontAwesome: true,
+      spellChecker: false,
+      autosave: {
+        enabled: true,
+        uniqueId: "cppCloudNote",
+        delay: 1000,
+      }
+    });
+
+    window.onload = () => {
+      const saved = localStorage.getItem("cppCloudNote");
+      if (saved) {
+        easyMDE.value(saved);
+        updatePreview(saved);
+      }
+    }
+
+    function saveNote() {
+      const content = easyMDE.value();
+      localStorage.setItem("cppCloudNote", content);
+      updatePreview(content);
+    }
+
+    function updatePreview(mdText) {
+      document.getElementById("preview").innerHTML = easyMDE.options.previewRender(mdText);
+    }
+  </script>
+</body>
+</html>
